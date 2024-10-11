@@ -12,8 +12,7 @@
     </a>
 </p>
 
-LazySwipeActions is a modifier that allow you to have custom Swipe Action also if you are not implement a `List`.
-Is designed to be as similar as possible to the [original modifier](https://developer.apple.com/documentation/swiftui/view/swipeactions(edge:allowsfullswipe:content:)) `.swipeActions(content: <#T##() -> View#>)` in the SwiftUI library.
+LazySwipeActions is a modifier that allows you to implement custom swipe actions even if you're not working with a `List`. It is designed to be as close as possible to the [original modifier](https://developer.apple.com/documentation/swiftui/view/swipeactions(edge:allowsfullswipe:content:)) `.swipeActions(content: <#T##() -> View#>)` from the SwiftUI library.
 
 - [See it in action](#see-it-in-action)
 - [How to use LazySwipeActions in your project](#how-to-use-LazySwipeActions-in-your-project)
@@ -21,7 +20,7 @@ Is designed to be as similar as possible to the [original modifier](https://deve
 
 ## See it in action
 
-This repository contains a cross-platform sample project demonstrating this package in action. The sample project is built using SwiftUI.
+This repository includes a cross-platform sample project that demonstrates this package in action. The sample project is built using SwiftUI.
 
 [Example Repository](https://github.com/gorpello/LazySwipeActions_Example)
 
@@ -33,22 +32,21 @@ The sample project contains example on how to use this package code.
 
 ## How to use LazySwipeActions in your project
 
-You can import LazySwipeActions in your project using the Swift Package Manager.
-In XCode click _File_ → _Swift Packages_ → _Add Package Dependency..._ → choose target to add FlexColorPicker to → enter `https://github.com/gorpello/LazySwipeActions`, press next → set version prefference and confirm.
+You can import LazySwipeActions into your project using the Swift Package Manager. In Xcode, click _File_ → _Swift Packages_ → _Add Package Dependency..._ → choose target to add LazySwipeActions to → enter https://github.com/gorpello/LazySwipeActions, press Next → set the version preference, and confirm.
 
-Alternativelly, if you are using Package.swift just add this dependency:
+Alternatively, if you're using `Package.swift`, simply add this dependency:
 
     dependencies: [
         .package(url: "https://github.com/gorpello/LazySwipeActions", branch: "main")
     ]
 
-After that in order to use LazySwipeActions in your swift file, first you need to import it:
+After that, to use `LazySwipeActions` in your Swift file, you'll first need to import it:
 
 ```swift
 import LazySwipeActions
 ```
 
-After that you can easily call the modifier.
+After that, you can easily apply the modifier.
 
 ```swift
 Text("Some View")
