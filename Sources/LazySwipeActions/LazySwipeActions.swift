@@ -1,5 +1,9 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+//
+//  CustomTransition.swift
+//  LazySwipeActions
+//
+//  Created by Gianluca Orpello on 07/10/24.
+//
 
 import SwiftUI
 
@@ -14,10 +18,12 @@ public extension View {
     @MainActor
     func lazySwipeActions(edge: HorizontalEdge = .trailing,
                           allowsFullSwipe: Bool = true,
+                          buttonWidth: CGFloat = 100,
                           @ActionBuilder actions: @escaping () -> [SwipeAction])
     -> some View {
         modifier(LazySwipeAction(edge: edge,
                                  allowsFullSwipe: allowsFullSwipe,
+                                 buttonWidth: buttonWidth,
                                  actions: actions()))
     }
     
@@ -29,6 +35,7 @@ struct LazySwipeAction: ViewModifier {
     let cornerRadius: CGFloat
     let edge: HorizontalEdge
     let allowsFullSwipe: Bool
+    let buttonWidth: CGFloat
     @ActionBuilder var actions: [SwipeAction]
     
     /// View Properties
@@ -43,10 +50,12 @@ struct LazySwipeAction: ViewModifier {
     init(cornerRadius: CGFloat = 0,
          edge: HorizontalEdge,
          allowsFullSwipe: Bool,
+         buttonWidth: CGFloat = 100,
          actions: [SwipeAction]) {
         self.cornerRadius = cornerRadius
         self.edge = edge
         self.allowsFullSwipe = allowsFullSwipe
+        self.buttonWidth = buttonWidth
         self.actions = actions
     }
     
@@ -81,7 +90,7 @@ struct LazySwipeAction: ViewModifier {
                             }
                         }
                     
-                    ActionButtons {
+                    ActionButtons(buttonWidth: buttonWidth) {
                         withAnimation(.snappy) {
                             scrollProxy.scrollTo(viewID, anchor: edge == .trailing ? .topLeading : .topTrailing)
                         }
@@ -112,11 +121,13 @@ struct LazySwipeAction: ViewModifier {
     
     /// Action Buttons
     @ViewBuilder
-    func ActionButtons(resetPosition: @escaping () -> ()) -> some View {
-        /// Each Button Will Have 100 Width
+    func ActionButtons(
+        buttonWidth: CGFloat = 100,
+        resetPosition: @escaping () -> ()
+    ) -> some View {
         Rectangle()
             .fill(.clear)
-            .frame(width: CGFloat(filteredActions.count) * 100)
+            .frame(width: CGFloat(filteredActions.count) * buttonWidth)
             .overlay(alignment: edge == .leading ? .leading: .trailing) {
                 HStack(spacing: 0) {
                     ForEach(filteredActions) { button in
@@ -134,10 +145,11 @@ struct LazySwipeAction: ViewModifier {
                             Image(systemName: button.icon)
                                 .font(button.iconFont)
                                 .foregroundStyle(button.iconTint)
-                                .frame(width: 100)
+                                .frame(width: buttonWidth)
                                 .frame(maxHeight: .infinity)
                                 .contentShape(.rect)
                         })
+                        .frame(width: buttonWidth)
                         .buttonStyle(.plain)
                         .background(button.tint)
                         .rotationEffect(.init(degrees: edge == .leading ? -180 : 0))
@@ -172,9 +184,18 @@ struct OffsetKey: PreferenceKey {
             ForEach(0...5, id: \.self) { _ in
                 
                 Text("Wow")
+                    .background(.green)
+                    .frame(height: 40)
                     .lazySwipeActions(edge: .trailing,
-                                      allowsFullSwipe: true) {
+                                      allowsFullSwipe: true,
+                                      buttonWidth: 80
+                    ) {
                         SwipeAction(tint: .blue,
+                                    icon: "star.fill",
+                                    isEnabled: true) {
+                            print("Bookmarked")
+                        }
+                        SwipeAction(tint: .red,
                                     icon: "star.fill",
                                     isEnabled: true) {
                             print("Bookmarked")

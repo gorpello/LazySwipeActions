@@ -7,7 +7,7 @@ let package = Package(
     name: "LazySwipeActions",
     platforms: [
         .iOS(.v17),
-        .macOS(.v10_15),
+        .macOS(.v14),
         .tvOS(.v16),
         .macCatalyst(.v16),
         .visionOS(.v1),
